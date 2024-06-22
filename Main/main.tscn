@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://62n44u0tf44e"]
+
+[ext_resource type="PackedScene" uid="uid://dbxoyt83rvi6c" path="res://characters/Player/player.tscn" id="1_gmf3f"]
+[ext_resource type="PackedScene" uid="uid://lan5imy5o6a" path="res://characters/Pohon/Pinus/pohon_pinus.tscn" id="2_7yovg"]
+[ext_resource type="PackedScene" uid="uid://4f5hyktlgpgt" path="res://characters/Mob/mob.tscn" id="2_i48qg"]
+
+[node name="Main" type="Node2D"]
+y_sort_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1931.0
+offset_bottom = 1086.0
+color = Color(0.975999, 0.984477, 0.984634, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_gmf3f")]
+position = Vector2(974, 500)
+
+[node name="Mob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
+position = Vector2(484, 634)
+player = NodePath("../Player")
+
+[node name="Mob2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
+position = Vector2(975, 896)
+player = NodePath("../Player")
+
+[node name="Mob3" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
+position = Vector2(1461, 954)
+player = NodePath("../Player")
+
+[node name="Mob4" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
+position = Vector2(949, 286)
+player = NodePath("../Player")
+
+[node name="PohonPinus" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(177, 321)
+
+[node name="PohonPinus2" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(572, 225)
+
+[node name="PohonPinus3" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(194, 679)
+
+[node name="PohonPinus4" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(496, 276)
+
+[node name="PohonPinus5" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(496, 206)
+
+[node name="PohonPinus6" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(1398, 260)
+
+[node name="PohonPinus7" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(1671, 450)
+
+[node name="PohonPinus8" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(1700, 844)
+
+[node name="PohonPinus9" parent="." instance=ExtResource("2_7yovg")]
+position = Vector2(760, 907)

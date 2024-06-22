@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbxoyt83rvi6c"]
+
+[ext_resource type="Script" path="res://characters/Player/player.gd" id="1_m4ev3"]
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_m074q"]
+[ext_resource type="PackedScene" uid="uid://d3lplqlrjpsia" path="res://Item/tembakan.tscn" id="3_bpsva"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c20fc"]
+radius = 39.2046
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 3
+script = ExtResource("1_m4ev3")
+
+[node name="HappyBoo" parent="." instance=ExtResource("1_m074q")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c20fc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_smoothed = true
+
+[node name="Tembakan" parent="." instance=ExtResource("3_bpsva")]
+position = Vector2(-4, -19)
+collision_layer = 0
+collision_mask = 2
