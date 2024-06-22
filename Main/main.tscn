@@ -1,11 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://62n44u0tf44e"]
+[gd_scene load_steps=5 format=3 uid="uid://62n44u0tf44e"]
 
 [ext_resource type="PackedScene" uid="uid://dbxoyt83rvi6c" path="res://characters/Player/player.tscn" id="1_gmf3f"]
+[ext_resource type="Script" path="res://Main/main.gd" id="1_h2sye"]
 [ext_resource type="PackedScene" uid="uid://lan5imy5o6a" path="res://characters/Pohon/Pinus/pohon_pinus.tscn" id="2_7yovg"]
-[ext_resource type="PackedScene" uid="uid://4f5hyktlgpgt" path="res://characters/Mob/mob.tscn" id="2_i48qg"]
+
+[sub_resource type="Curve2D" id="Curve2D_gmqg3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -145, -226, 0, 0, 0, 0, 2092, -210, 0, 0, 0, 0, 2172, 1168, 0, 0, 0, 0, -97, 1136, 0, 0, 0, 0, -145, -226)
+}
+point_count = 5
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_h2sye")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -15,24 +22,17 @@ offset_right = 1931.0
 offset_bottom = 1086.0
 color = Color(0.975999, 0.984477, 0.984634, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_gmf3f")]
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("1_gmf3f")]
 position = Vector2(974, 500)
 
-[node name="Mob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
-position = Vector2(484, 634)
-player = NodePath("../Player")
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-974, -500)
+curve = SubResource("Curve2D_gmqg3")
 
-[node name="Mob2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
-position = Vector2(975, 896)
-player = NodePath("../Player")
-
-[node name="Mob3" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
-position = Vector2(1461, 954)
-player = NodePath("../Player")
-
-[node name="Mob4" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_i48qg")]
-position = Vector2(949, 286)
-player = NodePath("../Player")
+[node name="lokasiSpawn" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(-145, -226)
+rotation = 0.00715231
 
 [node name="PohonPinus" parent="." instance=ExtResource("2_7yovg")]
 position = Vector2(177, 321)
@@ -60,3 +60,63 @@ position = Vector2(1700, 844)
 
 [node name="PohonPinus9" parent="." instance=ExtResource("2_7yovg")]
 position = Vector2(760, 907)
+
+[node name="TimerSpawn" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.4
+autostart = true
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.454902)
+
+[node name="Label" type="Label" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = -11.5
+offset_right = 41.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 90
+text = "GameOver"
+
+[node name="Label2" type="Label" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.5
+offset_top = 68.0
+offset_right = 375.5
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "\"Pencet untuk Mulai Lagi\""
+
+[node name="Button" type="Button" parent="GameOver"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 88.0
+offset_top = 56.0
+offset_right = 1879.0
+offset_bottom = 1049.0
+text = "TOMBOL"
+
+[connection signal="player_mati" from="Player" to="." method="_on_player_player_mati"]
+[connection signal="timeout" from="TimerSpawn" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="GameOver/Button" to="." method="_on_button_pressed"]
